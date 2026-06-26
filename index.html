@@ -4,41 +4,56 @@
 <title>脆弱度指標</title>
 <style>
   body{margin:0;background:#0a0f14;color:#e6edf3;font-family:"Microsoft JhengHei",system-ui,sans-serif;
-    display:flex;flex-direction:column;align-items:center;padding:16px;gap:12px}
+    display:flex;flex-direction:column;align-items:center;padding:16px;gap:10px}
   .card{width:100%;max-width:560px}
-  h1{font-size:19px;margin:0 0 2px}
-  .asof{font-size:12px;opacity:.6}
-  .score{font-size:50px;font-weight:800;text-align:center;margin:8px 0 4px}
+  h1{font-size:18px;margin:0 0 2px}
+  .asof{font-size:12px;opacity:.6;margin-bottom:6px}
+  select{width:100%;padding:10px;font-size:15px;border-radius:8px;border:1px solid #2a3a52;
+    background:#121a26;color:#e6edf3;font-family:inherit}
+  .score{font-size:50px;font-weight:800;text-align:center;margin:10px 0 4px}
   .bar{height:16px;border-radius:8px;background:#1c2633;overflow:hidden}
   .fill{height:100%;border-radius:8px;transition:width .4s}
   .band{text-align:center;font-size:16px;margin:8px 0;font-weight:bold}
-  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
-  td,th{padding:6px 4px;border-bottom:1px solid #1c2633;text-align:left;vertical-align:top}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px}
+  td{padding:6px 4px;border-bottom:1px solid #1c2633;text-align:left;vertical-align:top}
   td.p{text-align:right;font-weight:bold;white-space:nowrap}
+  .hdr td{opacity:.55;font-size:11px;padding-top:12px;border:0}
   .warn{font-size:12px;opacity:.78;line-height:1.7;margin-top:14px;border-top:1px solid #1c2633;padding-top:10px}
 </style>
 <div class="card">
-  <h1>⚠️ Claude 融合脆弱度指標 <span id="tk"></span></h1>
+  <h1>⚠️ Claude 融合脆弱度指標</h1>
   <div class="asof" id="asof">讀取中...</div>
+  <select id="sel"></select>
   <div class="score" id="score">—</div>
   <div class="bar"><div class="fill" id="fill" style="width:0"></div></div>
   <div class="band" id="band"></div>
-  <table id="tbl"><thead><tr><th>訊號</th><th>讀數</th><th class="p">分</th></tr></thead><tbody></tbody></table>
+  <table id="tbl"><tbody></tbody></table>
   <div class="warn" id="warn"></div>
 </div>
 <script>
+const $=id=>document.getElementById(id); let DATA=null;
+const COL=v=>v<3?'#3fb950':v<5?'#d2a106':v<7?'#e0824d':'#e5534b';
 fetch('fragility.json?'+Date.now()).then(r=>r.json()).then(d=>{
-  document.getElementById('tk').textContent='· '+d.ticker;
-  document.getElementById('asof').textContent='資料時間 '+d.asof+'（每週一自動更新）';
-  document.getElementById('score').textContent=d.total+' / 10';
-  const pct=Math.min(100,d.total*10);
-  const col=d.total<3?'#3fb950':d.total<5?'#d2a106':d.total<7?'#e0824d':'#e5534b';
-  const f=document.getElementById('fill'); f.style.width=pct+'%'; f.style.background=col;
-  const b=document.getElementById('band'); b.textContent=d.band; b.style.color=col;
-  const tb=document.querySelector('#tbl tbody');
-  d.signals.forEach(s=>{ const tr=document.createElement('tr');
-    tr.innerHTML='<td>'+s.name+'<br><span style="opacity:.5;font-size:11px">'+s.note+'</span></td>'+
-                 '<td>'+s.reading+'</td><td class="p">'+s.pts.toFixed(1)+'</td>'; tb.appendChild(tr); });
-  document.getElementById('warn').innerHTML='⚠️ 這是「狀態」不是「時點」。脆弱≠馬上爆,領先時間極不定(可能早數月~數年)。<br>執行法:分批回應、接受自己會早、機械照表,不預測哪天。<br>你的部位%/槓桿請自己加進總分。';
-}).catch(()=>{document.getElementById('score').textContent='讀取失敗';document.getElementById('asof').textContent='fragility.json 還沒產生(等第一次 Action 跑完)';});
+  DATA=d;
+  $('asof').textContent='資料時間 '+d.asof+'（每週一自動更新）';
+  d.items.forEach((it,i)=>{ const o=document.createElement('option');
+    o.value=i; o.textContent=it.name+'（'+it.ticker+'）— '+it.total+'/10'; $('sel').appendChild(o); });
+  $('sel').onchange=()=>render(+$('sel').value); render(0);
+  $('warn').innerHTML='⚠️ 這是「狀態」不是「時點」。脆弱≠馬上爆,領先時間極不定(可能早數月~數年)。<br>'+
+    '執行法:分批回應、接受自己會早、機械照表,不預測哪天。<br>'+
+    '宏觀訊號是美國/全球風險背景(台股也吃 risk-off);你的部位%/槓桿請自己加進總分。';
+}).catch(()=>{ $('score').textContent='讀取失敗'; $('asof').textContent='fragility.json 還沒產生(等第一次 Action 跑完)'; });
+function render(i){
+  const it=DATA.items[i], c=COL(it.total);
+  $('score').textContent=it.total+' / 10';
+  $('fill').style.width=Math.min(100,it.total*10)+'%'; $('fill').style.background=c;
+  $('band').textContent=it.band; $('band').style.color=c;
+  const tb=document.querySelector('#tbl tbody'); tb.innerHTML='';
+  const hdr=t=>{ const r=tb.insertRow(); r.className='hdr'; r.innerHTML='<td colspan="3">'+t+'</td>'; };
+  const row=s=>{ const r=tb.insertRow();
+    r.innerHTML='<td>'+s.name+'<br><span style="opacity:.5;font-size:11px">'+s.note+'</span></td>'+
+                '<td>'+s.reading+'</td><td class="p">'+s.pts.toFixed(1)+'</td>'; };
+  hdr('本標的 · 趨勢/乖離'); it.signals.forEach(row);
+  hdr('市場共用 · 宏觀背景'); DATA.macro.forEach(row);
+}
 </script>

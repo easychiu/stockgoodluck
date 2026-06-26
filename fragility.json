@@ -1,15 +1,6 @@
 {
-  "ticker": "^TWII",
-  "total": 3.0,
-  "band": "升高 → 留意, 小幅減碼+拉現金",
-  "asof": "2026-06-26 06:47 UTC",
-  "signals": [
-    {
-      "name": "^TWII趨勢/乖離",
-      "reading": "價44572/200MA32693",
-      "pts": 1.0,
-      "note": "在200MA上方+36%; 乖離>30%"
-    },
+  "asof": "2026-06-26 06:55 UTC",
+  "macro": [
     {
       "name": "HY信用利差",
       "reading": "抓取失敗",
@@ -45,6 +36,65 @@
       "reading": "41.0 極貴",
       "pts": 2.0,
       "note": "歷史均~17; 高估值→長期報酬偏低"
+    }
+  ],
+  "macro_pts": 2.0,
+  "items": [
+    {
+      "ticker": "^TWII",
+      "name": "台股加權",
+      "total": 3.0,
+      "band": "升高 → 留意, 小幅減碼+拉現金",
+      "signals": [
+        {
+          "name": "^TWII 趨勢/乖離",
+          "reading": "價44572/200MA32693",
+          "pts": 1.0,
+          "note": "在200MA上方+36%; 乖離>30%"
+        }
+      ]
+    },
+    {
+      "ticker": "2330.TW",
+      "name": "台積電",
+      "total": 3.0,
+      "band": "升高 → 留意, 小幅減碼+拉現金",
+      "signals": [
+        {
+          "name": "2330.TW 趨勢/乖離",
+          "reading": "價2340/200MA1743",
+          "pts": 1.0,
+          "note": "在200MA上方+34%; 乖離>30%"
+        }
+      ]
+    },
+    {
+      "ticker": "^GSPC",
+      "name": "美股S&P500",
+      "total": 2.0,
+      "band": "低脆弱 → 留在車上(時間在場內是 edge)",
+      "signals": [
+        {
+          "name": "^GSPC 趨勢/乖離",
+          "reading": "價7357/200MA6921",
+          "pts": 0,
+          "note": "在200MA上方+6%"
+        }
+      ]
+    },
+    {
+      "ticker": "QQQ",
+      "name": "那斯達克100",
+      "total": 2.0,
+      "band": "低脆弱 → 留在車上(時間在場內是 edge)",
+      "signals": [
+        {
+          "name": "QQQ 趨勢/乖離",
+          "reading": "價716/200MA630",
+          "pts": 0,
+          "note": "在200MA上方+14%"
+        }
+      ]
     }
   ]
 }

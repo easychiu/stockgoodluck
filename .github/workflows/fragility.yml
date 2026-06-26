@@ -14,7 +14,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: { python-version: '3.12' }
       - run: pip install --quiet pandas numpy yfinance
-      - run: python fragility_dashboard.py "^TWII" --json
+      - run: python fragility_dashboard.py --watch
       - name: commit fragility.json
         run: |
           git config user.name "github-actions[bot]"
@@ -22,14 +22,14 @@ jobs:
           git add fragility.json
           git commit -m "weekly fragility update" || echo "no change"
           git push
-      - name: alert only if fragile (score >= 4)
+      - name: alert only if any ticker fragile (>= 4)
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          score=$(python -c "import json;print(json.load(open('fragility.json'))['total'])")
-          if python -c "import sys;sys.exit(0 if float('$score')>=4 else 1)"; then
-            gh issue create --title "⚠️ 脆弱度升高 ${score}/10" \
-              --body "脆弱度達 ${score}/10。詳見 fragility.json 或 fragility.html。提醒:這是狀態不是時點,分批回應、別預測哪天。"
+          hi=$(python -c "import json;d=json.load(open('fragility.json'));xs=[i for i in d['items'] if i['total']>=4];print(' / '.join(f\"{i['name']} {i['total']}/10\" for i in xs))")
+          if [ -n "$hi" ]; then
+            gh issue create --title "⚠️ 脆弱度升高" \
+              --body "以下標的 ≥4/10: ${hi}。提醒:這是狀態不是時點,分批回應、別預測哪天。詳見 https://easychiu.github.io/stockgoodluck/"
           else
-            echo "calm (${score}/10), no alert"
+            echo "all calm, no alert"
           fi
