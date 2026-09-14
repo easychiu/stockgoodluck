@@ -1,5 +1,5 @@
 {
-  "asof": "2026-09-07 01:17 UTC",
+  "asof": "2026-09-14 01:21 UTC",
   "macro": [
     {
       "name": "HY信用利差",
@@ -27,72 +27,72 @@
     },
     {
       "name": "市場廣度RSP/SPY",
-      "reading": "6月-2.7%",
-      "pts": 0.0,
+      "reading": "6月-3.5%",
+      "pts": 1.0,
       "note": "負=廣度差,撐盤"
     },
     {
       "name": "Shiller CAPE估值",
-      "reading": "41.4 極貴",
+      "reading": "41.1 極貴",
       "pts": 2.0,
       "note": "歷史均~17; 高估值→長期報酬偏低"
     }
   ],
-  "macro_pts": 2.0,
+  "macro_pts": 3.0,
   "items": [
     {
       "ticker": "^TWII",
       "name": "台股加權",
-      "total": 2.0,
-      "band": "低脆弱 → 留在車上(時間在場內是 edge)",
+      "total": 3.0,
+      "band": "升高 → 留意, 小幅減碼+拉現金",
       "signals": [
         {
           "name": "^TWII 趨勢/乖離",
-          "reading": "價46551/200MA37243",
+          "reading": "價45585/200MA37813",
           "pts": 0,
-          "note": "在200MA上方+25%"
+          "note": "在200MA上方+21%"
         }
       ]
     },
     {
       "ticker": "2330.TW",
       "name": "台積電",
-      "total": 2.0,
-      "band": "低脆弱 → 留在車上(時間在場內是 edge)",
+      "total": 3.0,
+      "band": "升高 → 留意, 小幅減碼+拉現金",
       "signals": [
         {
           "name": "2330.TW 趨勢/乖離",
-          "reading": "價2410/200MA2007",
+          "reading": "價2390/200MA2038",
           "pts": 0,
-          "note": "在200MA上方+20%"
+          "note": "在200MA上方+17%"
         }
       ]
     },
     {
       "ticker": "^GSPC",
       "name": "美股S&P500",
-      "total": 2.0,
-      "band": "低脆弱 → 留在車上(時間在場內是 edge)",
+      "total": 3.0,
+      "band": "升高 → 留意, 小幅減碼+拉現金",
       "signals": [
         {
           "name": "^GSPC 趨勢/乖離",
-          "reading": "價7719/200MA7142",
+          "reading": "價7657/200MA7163",
           "pts": 0,
-          "note": "在200MA上方+8%"
+          "note": "在200MA上方+7%"
         }
       ]
     },
     {
       "ticker": "QQQ",
       "name": "那斯達克100",
-      "total": 2.0,
-      "band": "低脆弱 → 留在車上(時間在場內是 edge)",
+      "total": 3.0,
+      "band": "升高 → 留意, 小幅減碼+拉現金",
       "signals": [
         {
           "name": "QQQ 趨勢/乖離",
-          "reading": "價719/200MA657",
+          "reading": "價715/200MA659",
           "pts": 0,
-          "note": "在200MA上方+9%"
+          "note": "在200MA上方+8%"
         }
       ]
     }
