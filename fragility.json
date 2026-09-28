@@ -1,5 +1,5 @@
 {
-  "asof": "2026-09-21 01:19 UTC",
+  "asof": "2026-09-28 01:24 UTC",
   "macro": [
     {
       "name": "HY信用利差",
@@ -27,13 +27,13 @@
     },
     {
       "name": "市場廣度RSP/SPY",
-      "reading": "6月-4.8%",
+      "reading": "6月-7.7%",
       "pts": 1.0,
       "note": "負=廣度差,撐盤"
     },
     {
       "name": "Shiller CAPE估值",
-      "reading": "40.9 極貴",
+      "reading": "41.5 極貴",
       "pts": 2.0,
       "note": "歷史均~17; 高估值→長期報酬偏低"
     }
@@ -48,9 +48,9 @@
       "signals": [
         {
           "name": "^TWII 趨勢/乖離",
-          "reading": "價47296/200MA38306",
+          "reading": "價48025/200MA38619",
           "pts": 0,
-          "note": "在200MA上方+23%"
+          "note": "在200MA上方+24%"
         }
       ]
     },
@@ -62,7 +62,7 @@
       "signals": [
         {
           "name": "2330.TW 趨勢/乖離",
-          "reading": "價2450/200MA2057",
+          "reading": "價2475/200MA2073",
           "pts": 0,
           "note": "在200MA上方+19%"
         }
@@ -76,7 +76,7 @@
       "signals": [
         {
           "name": "^GSPC 趨勢/乖離",
-          "reading": "價7650/200MA7183",
+          "reading": "價7743/200MA7205",
           "pts": 0,
           "note": "在200MA上方+7%"
         }
@@ -90,9 +90,9 @@
       "signals": [
         {
           "name": "QQQ 趨勢/乖離",
-          "reading": "價721/200MA662",
+          "reading": "價744/200MA664",
           "pts": 0,
-          "note": "在200MA上方+9%"
+          "note": "在200MA上方+12%"
         }
       ]
     }
